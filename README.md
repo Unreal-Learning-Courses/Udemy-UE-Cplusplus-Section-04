@@ -4,3 +4,4 @@ An open-world head-to-thread tank fight with simple AI, terrain, and advanced co
 ## Progress List
 
 * BT01 Intro, Notes & Assets
+* BT02 Game Design Document (GDD)
