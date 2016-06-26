@@ -47,7 +47,7 @@ void ATankPlayerController::AimTowardsCrosshair() {
 	// Get world location if linetrace through crosshair
 	if (GetSightRayHitLocation(hitLocation)) {
 		// If it hits the landscape
-		UE_LOG(LogTemp, Warning, TEXT("hitLocation: %s"), *hitLocation.ToString());
+		//UE_LOG(LogTemp, Warning, TEXT("hitLocation: %s"), *hitLocation.ToString());
 	}
 
 
@@ -56,12 +56,53 @@ void ATankPlayerController::AimTowardsCrosshair() {
 }
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector& hitLocation) const {
-	//GetWorld()->LineTraceSingle();
-	hitLocation = FVector(1.0);
-	if(!&hitLocation) {
-		return false;
+	
+	/// Find the crosshair position
+	int32 viewportSizeX, viewportSizeY;
+	GetViewportSize(viewportSizeX, viewportSizeY);
+	FVector2D screenLocation = FVector2D(viewportSizeX*crossHairXLocation, viewportSizeY*crossHairYLocation);
+	//UE_LOG(LogTemp, Warning, TEXT("screenLocation: %s"), *screenLocation.ToString());
+
+	FVector lookDirection;
+
+	if (GetLookDirection(screenLocation,lookDirection)) {
+
+		//UE_LOG(LogTemp, Warning, TEXT("Look direction:: %s"), *lookDirection.ToString());
+
+		// Line-trace along that look direction, and see what we hit (up to max range)
+		if (GetLookVectorHitLocation(hitLocation, lookDirection)) {
+			return true;
+		}
 	}
-	else {
+	return false;
+}
+
+bool ATankPlayerController::GetLookDirection(FVector2D screenLocation, FVector& lookDirection) const {
+
+
+
+	/// "De-project" the screen position of the crosshair to a world direction
+	FVector cameraLocation;
+	if (DeprojectScreenPositionToWorld(screenLocation.X, screenLocation.Y, cameraLocation, lookDirection)) {
+
 		return true;
 	}
+	return false;
+}
+
+bool ATankPlayerController::GetLookVectorHitLocation(FVector& hitLocation, FVector& lookDirection) const{
+
+	/// Line-trace out to reach distance
+	auto startLocation = PlayerCameraManager->GetCameraLocation();
+	FHitResult hitResult;
+	FVector reachEnd = startLocation + lookDirection*reach;
+
+
+	if (GetWorld()->LineTraceSingleByChannel(hitResult, startLocation, reachEnd, ECollisionChannel::ECC_Visibility)) {
+		hitLocation = hitResult.ImpactPoint;
+		UE_LOG(LogTemp, Warning, TEXT("hitResult: %s"), *hitLocation.ToString());
+		return true;
+	}
+	hitLocation = FVector(0);
+	return false;
 }
