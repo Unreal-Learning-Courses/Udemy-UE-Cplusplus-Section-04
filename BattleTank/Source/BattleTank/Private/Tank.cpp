@@ -4,6 +4,8 @@
 #include "Tank.h"
 
 
+
+
 // Sets default values
 ATank::ATank()
 {
@@ -40,9 +42,13 @@ void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 
 void ATank::AimAt(FVector hitLocation) {
 
-tankAimingComponent->AimAt(hitLocation);
+tankAimingComponent->AimAt(hitLocation, launchSpeed);
 //auto ourTankName = GetName();
 
 //UE_LOG(LogTemp, Warning, TEXT("%s is aiming at: %s"),*ourTankName, *hitLocation.ToString());
 }
 
+void ATank::SetBarrelReference(UStaticMeshComponent * barrelToSet)
+{
+	tankAimingComponent->SetBarrelReference(barrelToSet);
+}

@@ -15,6 +15,9 @@ public:
 	//void AimAt(FVector hitLocation);
 	void AimAt(FVector hitLocation);
 
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetBarrelReference(UStaticMeshComponent* barrelToSet);
+
 protected:
 	UTankAimingComponent* tankAimingComponent = nullptr;
 
@@ -31,7 +34,8 @@ private:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
-
+	UPROPERTY(EditAnywhere, Category = Firing)
+		float launchSpeed = 1000000; // TODO find Sensible starting value.
 
 	
 	
