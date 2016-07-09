@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTank.h"
+#include "TankBarrel.h"
 #include "Tank.h"
 
 
@@ -38,6 +39,14 @@ void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 
 }
 
+/*
+UTankBarrel* ATank::meshToBarrel(UStaticMeshComponent * barrelToSet)
+{
+return Cast<UTankBarrel>(barrelToSet);
+}
+*/
+
+
 
 
 void ATank::AimAt(FVector hitLocation) {
@@ -48,7 +57,9 @@ tankAimingComponent->AimAt(hitLocation, launchSpeed);
 //UE_LOG(LogTemp, Warning, TEXT("%s is aiming at: %s"),*ourTankName, *hitLocation.ToString());
 }
 
-void ATank::SetBarrelReference(UStaticMeshComponent * barrelToSet)
+void ATank::SetBarrelReference(UTankBarrel * barrelToSet)
 {
+	//UTankBarrel* barrel = meshToBarrel(barrelToSet);
 	tankAimingComponent->SetBarrelReference(barrelToSet);
 }
+

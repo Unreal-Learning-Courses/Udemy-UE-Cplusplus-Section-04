@@ -23,7 +23,7 @@ if (!playerTank) {
 UE_LOG(LogTemp, Warning, TEXT("Player Tank not found!"));
 }
 else {
-UE_LOG(LogTemp, Warning, TEXT("Player Controller %s found!"),*playerTank->GetName());
+//UE_LOG(LogTemp, Warning, TEXT("Player Controller %s found!"),*playerTank->GetName());
 }
 
 
