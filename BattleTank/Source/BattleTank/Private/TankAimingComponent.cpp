@@ -24,12 +24,22 @@ void UTankAimingComponent::AimAt(FVector hitLocation,float launchSpeed) {
 	FVector startLocation = barrel->GetSocketLocation(FName("canonTip"));
 	
 	// Calculate the OUTlaunchVelocity
+	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity(this, OUTlaunchVelocity, startLocation, hitLocation, launchSpeed, false, 0, 0, ESuggestProjVelocityTraceOption::DoNotTrace);
 
-	if (UGameplayStatics::SuggestProjectileVelocity(this, OUTlaunchVelocity, startLocation, hitLocation, launchSpeed,false,0,0,ESuggestProjVelocityTraceOption::DoNotTrace)) {
+	if (bHaveAimSolution) {
 		auto aimDirection = OUTlaunchVelocity.GetSafeNormal();
 
 		//UE_LOG(LogTemp, Warning, TEXT("%s is aiming at %s"),*ourTankName, *aimDirection.ToString());
 		MoveBarrelTowards(aimDirection);
+		
+		auto time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found"), time);
+
+	}
+	else {
+		
+		auto time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f: No aim solve found"), time);
 
 	}
 }
