@@ -33,13 +33,13 @@ void UTankAimingComponent::AimAt(FVector hitLocation,float launchSpeed) {
 		MoveBarrelTowards(aimDirection);
 		
 		auto time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found"), time);
+		//UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found"), time);
 
 	}
 	else {
 		
 		auto time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f: No aim solve found"), time);
+		//UE_LOG(LogTemp, Warning, TEXT("%f: No aim solve found"), time);
 
 	}
 }
@@ -51,9 +51,9 @@ void UTankAimingComponent::MoveBarrelTowards(FVector aimDirection)
 	FRotator aimAsRotator = aimDirection.Rotation();
 	FRotator deltaRotator = aimAsRotator - barrelRotator;
 
-	//UE_LOG(LogTemp, Warning, TEXT("aimRotator is %s"), *aimAsRotator.ToString());
+	UE_LOG(LogTemp, Warning, TEXT("deltaRotator is %f"), deltaRotator.Pitch);
 
-	barrel->Elevate(5.0); //TDO remove magic number
+	barrel->Elevate(deltaRotator.Pitch); //TODO remove magic number
 }
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* barrelToSet)
