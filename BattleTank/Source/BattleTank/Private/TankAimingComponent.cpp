@@ -2,6 +2,7 @@
 
 #include "BattleTank.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "TankAimingComponent.h"
 
 
@@ -18,8 +19,15 @@ void UTankAimingComponent::AimAt(FVector hitLocation,float launchSpeed) {
 
 	auto ourTankName = GetOwner()->GetName();
 	//FVector barrelLocation = barrel->GetComponentLocation();
-	if (!barrel) { return; }
+	if (!barrel) { 
+		UE_LOG(LogTemp, Warning, TEXT("barrel not found"));
+		return; 
+	}
 
+	if (!turret) { 
+		UE_LOG(LogTemp, Warning, TEXT("turret not found"));
+		return; 
+	}
 	FVector OUTlaunchVelocity;
 	FVector startLocation = barrel->GetSocketLocation(FName("canonTip"));
 	
@@ -31,7 +39,7 @@ void UTankAimingComponent::AimAt(FVector hitLocation,float launchSpeed) {
 
 		//UE_LOG(LogTemp, Warning, TEXT("%s is aiming at %s"),*ourTankName, *aimDirection.ToString());
 		MoveBarrelTowards(aimDirection);
-		
+		MoveTurretTowards(aimDirection);
 		auto time = GetWorld()->GetTimeSeconds();
 		//UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found"), time);
 
@@ -51,12 +59,27 @@ void UTankAimingComponent::MoveBarrelTowards(FVector aimDirection)
 	FRotator aimAsRotator = aimDirection.Rotation();
 	FRotator deltaRotator = aimAsRotator - barrelRotator;
 
-	UE_LOG(LogTemp, Warning, TEXT("deltaRotator is %f"), deltaRotator.Pitch);
+	//UE_LOG(LogTemp, Warning, TEXT("deltaRotator is %f"), deltaRotator.Pitch);
 
 	barrel->Elevate(deltaRotator.Pitch); //TODO remove magic number
+}
+
+void UTankAimingComponent::MoveTurretTowards(FVector aimDirection)
+{
+	FRotator turretRotator = turret->GetForwardVector().Rotation();
+	FRotator aimAsRotator = aimDirection.Rotation();
+	FRotator deltaRotator = aimAsRotator - turretRotator;
+
+	//UE_LOG(LogTemp, Warning, TEXT("deltaRotator is %f"), deltaRotator.Yaw);
+	turret->Rotate(deltaRotator.Yaw);
 }
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* barrelToSet)
 {
 	barrel = barrelToSet;
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret* turretToSet) {
+
+	turret = turretToSet;
 }
