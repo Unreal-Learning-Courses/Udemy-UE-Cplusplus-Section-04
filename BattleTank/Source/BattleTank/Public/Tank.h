@@ -8,6 +8,7 @@
 
 class UTankAimingComponent;
 class UTankBarrel; //Forward Declaration
+class AProjectile;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -44,6 +45,10 @@ private:
 		float launchSpeed = 1000000; // TODO find Sensible starting value.
 
 	//UTankBarrel* meshToBarrel(UStaticMeshComponent*);
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+		TSubclassOf<AProjectile> ProjectileBlueprint;
 	
-	
+	// local barrel reference for spawning projectile
+	UTankBarrel* barrel = nullptr;
 };
