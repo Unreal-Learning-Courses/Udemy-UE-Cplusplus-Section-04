@@ -34,15 +34,6 @@ void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 
 }
 
-/*
-UTankBarrel* ATank::meshToBarrel(UStaticMeshComponent * barrelToSet)
-{
-return Cast<UTankBarrel>(barrelToSet);
-}
-*/
-
-
-
 
 void ATank::AimAt(FVector hitLocation) {
 
@@ -66,11 +57,13 @@ void ATank::SetTurretReference(UTankTurret * turretToSet) {
 
 void ATank::Fire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Firing!"));
+	//UE_LOG(LogTemp, Warning, TEXT("Firing!"));
 
 	if (!barrel) { return; }
 
 	// Spawn a projectile at the socket location
-	GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, barrel->GetSocketLocation(FName("canonTip")),barrel->GetSocketRotation(FName("canonTip")));
+	auto projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, barrel->GetSocketLocation(FName("canonTip")),barrel->GetSocketRotation(FName("canonTip")));
+
+	projectile->LaunchProjectile(launchSpeed);
 	
 }
