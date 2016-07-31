@@ -28,6 +28,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Firing)
 	void Fire();
 
+	float reloadTimeInSeconds = 3;
+
 protected:
 	UTankAimingComponent* tankAimingComponent = nullptr;
 
@@ -51,4 +53,8 @@ private:
 	
 	// local barrel reference for spawning projectile
 	UTankBarrel* barrel = nullptr;
+
+
+
+	double lastFireTime = 0;
 };
