@@ -30,11 +30,11 @@ private:
 	bool GetLookVectorHitLocation(FVector& hitLocation, FVector& lookDirection) const;
 	
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 		float crossHairXLocation = 0.5;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 		float crossHairYLocation = 0.33333;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 		float reach = 10000000.0;
 
 	
