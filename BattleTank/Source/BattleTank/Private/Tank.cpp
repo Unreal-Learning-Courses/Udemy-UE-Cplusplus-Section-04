@@ -6,6 +6,7 @@
 #include "Tank.h"
 #include "Projectile.h"
 #include "TankAimingComponent.h"
+#include "TankMovementComponent.h"
 
 
 
@@ -17,6 +18,7 @@ ATank::ATank()
 
 	// No need to protect points as added at construction
 	tankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+	tankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
 
 }
 
@@ -67,5 +69,5 @@ void ATank::Fire()
 		projectile->LaunchProjectile(launchSpeed);
 		lastFireTime = FPlatformTime::Seconds();
 	}
-
 }
+
