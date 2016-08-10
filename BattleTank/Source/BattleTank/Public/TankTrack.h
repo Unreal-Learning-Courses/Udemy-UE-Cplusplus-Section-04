@@ -21,5 +21,5 @@ public:
 	// Max force per track, in Newtons
 	UPROPERTY(EditDefaultsOnly)
 		float trackMaxDrivingForce = 1330000/2; //based on 400hp on 35ton M4 Sherman
-	
+
 };

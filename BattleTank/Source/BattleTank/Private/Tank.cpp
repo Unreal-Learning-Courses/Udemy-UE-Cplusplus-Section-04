@@ -18,7 +18,7 @@ ATank::ATank()
 
 	// No need to protect points as added at construction
 	tankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
-	tankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
+	//tankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
 
 }
 
