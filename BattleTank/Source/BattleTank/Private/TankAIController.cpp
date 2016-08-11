@@ -51,7 +51,8 @@ void ATankAIController::Tick(float DeltaSeconds)
 
 		aiTank->reloadTimeInSeconds = 10;
 		// Fire if ready
-		aiTank->Fire(); //TODO not firing every frame
+		
+		//aiTank->Fire(); //TODO not firing every frame
 
 		
 	}

@@ -19,7 +19,7 @@ public:
 
 	
 	UFUNCTION(BlueprintCallable, Category = Setup)
-		void InitializeComponent(UTankTrack * leftTrackToSet, UTankTrack * rightTrackToSet);
+		void Initialize(UTankTrack * leftTrackToSet, UTankTrack * rightTrackToSet);
 
 	UFUNCTION(BlueprintCallable, Category = Input)
 		void IntendMoveForward(float controlThrow);
@@ -27,15 +27,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Input)
 		void IntendTurnRight(float controlThrow);
 
-	// TODO check best protection
-	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
+
+
 
 private:
 
 	UTankTrack* leftTrack = nullptr;
 	UTankTrack* rightTrack = nullptr;
 
+	// Called from the pathfinding logic by the AI controller
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 	
 
 
 };
+
