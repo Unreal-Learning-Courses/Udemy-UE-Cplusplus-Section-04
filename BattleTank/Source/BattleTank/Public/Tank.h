@@ -33,7 +33,8 @@ public:
 	float reloadTimeInSeconds = 3;
 
 protected:
-	UTankAimingComponent* tankAimingComponent = nullptr;
+	UPROPERTY(BlueprintReadOnly)
+		UTankAimingComponent* tankAimingComponent = nullptr;
 
 	//UPROPERTY(BlueprintReadOnly)
 	//UTankMovementComponent* tankMovementComponent = nullptr;
