@@ -15,6 +15,13 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
+void UTankAimingComponent::Initialize(UTankBarrel* barrelToSet, UTankTurret *turretToSet) {
+	if (!barrelToSet || !turretToSet) { return; }
+	barrel = barrelToSet;
+	turret = turretToSet;
+
+}
+
 void UTankAimingComponent::AimAt(FVector hitLocation,float launchSpeed) {
 
 	auto ourTankName = GetOwner()->GetName();
@@ -74,12 +81,14 @@ void UTankAimingComponent::MoveTurretTowards(FVector aimDirection)
 	turret->Rotate(deltaRotator.Yaw);
 }
 
+/*
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* barrelToSet)
 {
-	barrel = barrelToSet;
+barrel = barrelToSet;
 }
 
 void UTankAimingComponent::SetTurretReference(UTankTurret* turretToSet) {
 
-	turret = turretToSet;
+turret = turretToSet;
 }
+*/

@@ -46,6 +46,6 @@ void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, boo
 	IntendMoveForward(cosThrow);
 	IntendTurnRight(sinThrow);
 
-	UE_LOG(LogTemp, Warning, TEXT("cosThrow is %f"), cosThrow);
-	UE_LOG(LogTemp, Warning, TEXT("sinThrow is %f"), sinThrow);
+	//UE_LOG(LogTemp, Warning, TEXT("cosThrow is %f"), cosThrow);
+	//UE_LOG(LogTemp, Warning, TEXT("sinThrow is %f"), sinThrow);
 }
