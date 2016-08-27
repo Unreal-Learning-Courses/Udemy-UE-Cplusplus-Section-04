@@ -16,7 +16,7 @@ UTankAimingComponent::UTankAimingComponent()
 }
 
 void UTankAimingComponent::Initialize(UTankBarrel* barrelToSet, UTankTurret *turretToSet) {
-	if (!barrelToSet || !turretToSet) { return; }
+	if (!ensure(barrelToSet && turretToSet)) { return; }
 	barrel = barrelToSet;
 	turret = turretToSet;
 
@@ -26,12 +26,12 @@ void UTankAimingComponent::AimAt(FVector hitLocation,float launchSpeed) {
 
 	auto ourTankName = GetOwner()->GetName();
 	//FVector barrelLocation = barrel->GetComponentLocation();
-	if (!barrel) { 
+	if (!ensure(barrel)) { 
 		UE_LOG(LogTemp, Warning, TEXT("barrel not found"));
 		return; 
 	}
 
-	if (!turret) { 
+	if (!ensure(turret)) { 
 		UE_LOG(LogTemp, Warning, TEXT("turret not found"));
 		return; 
 	}
@@ -41,7 +41,7 @@ void UTankAimingComponent::AimAt(FVector hitLocation,float launchSpeed) {
 	// Calculate the OUTlaunchVelocity
 	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity(this, OUTlaunchVelocity, startLocation, hitLocation, launchSpeed, false, 0, 0, ESuggestProjVelocityTraceOption::DoNotTrace);
 
-	if (bHaveAimSolution) {
+	if (ensure(bHaveAimSolution)) {
 		auto aimDirection = OUTlaunchVelocity.GetSafeNormal();
 
 		//UE_LOG(LogTemp, Warning, TEXT("%s is aiming at %s"),*ourTankName, *aimDirection.ToString());

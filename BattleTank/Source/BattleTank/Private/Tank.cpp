@@ -41,7 +41,7 @@ void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 
 void ATank::AimAt(FVector hitLocation) {
 
-	if (!tankAimingComponent) { return; }
+	if (!ensure(tankAimingComponent)) { return; }
 	tankAimingComponent->AimAt(hitLocation, launchSpeed);
 //auto ourTankName = GetName();
 
@@ -67,7 +67,7 @@ void ATank::Fire()
 {
 	//UE_LOG(LogTemp, Warning, TEXT("Firing!"));
 	bool isReloaded = (FPlatformTime::Seconds() - lastFireTime) > reloadTimeInSeconds;
-	if (barrel && isReloaded) { 
+	if (ensure(barrel && isReloaded)) { 
 
 		// Spawn a projectile at the socket location
 		auto projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, barrel->GetSocketLocation(FName("canonTip")), barrel->GetSocketRotation(FName("canonTip")));

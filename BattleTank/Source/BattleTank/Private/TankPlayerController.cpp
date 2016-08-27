@@ -17,7 +17,7 @@ void ATankPlayerController::BeginPlay()
 	Super::BeginPlay();
 	
 	auto controlledTank = GetControlledTank();
-	if (!controlledTank) {
+	if (!ensure(controlledTank)) {
 		UE_LOG(LogTemp, Warning, TEXT("Control Pawn not found!"));
 	}
 	else {
@@ -25,7 +25,7 @@ void ATankPlayerController::BeginPlay()
 	}
 
 	auto aimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
-	if (aimingComponent) {
+	if (ensure(aimingComponent)) {
 		FoundAimingComponent(aimingComponent);
 	}
 	else {
@@ -51,12 +51,12 @@ void ATankPlayerController::Tick(float DeltaTime){
 
 void ATankPlayerController::AimTowardsCrosshair() {
 	
-	if (!GetControlledTank()) { return; }
+	if (!ensure(GetControlledTank())) { return; }
 
 	FVector hitLocation; // Out parameter
 	
 	// Get world location if linetrace through crosshair
-	if (GetSightRayHitLocation(hitLocation)) {
+	if (ensure(GetSightRayHitLocation(hitLocation))) {
 		// If it hits the landscape
 		//UE_LOG(LogTemp, Warning, TEXT("hitLocation: %s"), *hitLocation.ToString());
 		GetControlledTank()->AimAt(hitLocation);
@@ -77,12 +77,12 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& hitLocation) const {
 
 	FVector lookDirection;
 
-	if (GetLookDirection(screenLocation,lookDirection)) {
+	if (ensure(GetLookDirection(screenLocation,lookDirection))) {
 
 		//UE_LOG(LogTemp, Warning, TEXT("Look direction:: %s"), *lookDirection.ToString());
 
 		// Line-trace along that look direction, and see what we hit (up to max range)
-		if (GetLookVectorHitLocation(hitLocation, lookDirection)) {
+		if (ensure(GetLookVectorHitLocation(hitLocation, lookDirection))) {
 			return true;
 		}
 	}
@@ -95,7 +95,7 @@ bool ATankPlayerController::GetLookDirection(FVector2D screenLocation, FVector& 
 
 	/// "De-project" the screen position of the crosshair to a world direction
 	FVector cameraLocation;
-	if (DeprojectScreenPositionToWorld(screenLocation.X, screenLocation.Y, cameraLocation, lookDirection)) {
+	if (ensure(DeprojectScreenPositionToWorld(screenLocation.X, screenLocation.Y, cameraLocation, lookDirection))) {
 
 		return true;
 	}
@@ -110,7 +110,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector& hitLocation, FVect
 	FVector reachEnd = startLocation + lookDirection*reach;
 
 
-	if (GetWorld()->LineTraceSingleByChannel(hitResult, startLocation, reachEnd, ECollisionChannel::ECC_Visibility)) {
+	if (ensure(GetWorld()->LineTraceSingleByChannel(hitResult, startLocation, reachEnd, ECollisionChannel::ECC_Visibility))) {
 		hitLocation = hitResult.ImpactPoint;
 		//UE_LOG(LogTemp, Warning, TEXT("hitResult: %s"), *hitLocation.ToString());
 		return true;
