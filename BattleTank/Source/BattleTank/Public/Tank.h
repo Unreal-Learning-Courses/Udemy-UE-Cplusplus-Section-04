@@ -50,6 +50,7 @@ private:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
+	// TODO remove once firing is moved to aiming component
 	UPROPERTY(EditAnywhere, Category = Firing)
 		float launchSpeed = 1000000; // TODO find Sensible starting value.
 

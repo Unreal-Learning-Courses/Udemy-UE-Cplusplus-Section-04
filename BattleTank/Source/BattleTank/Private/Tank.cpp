@@ -28,7 +28,8 @@ void ATank::BeginPlay()
 	Super::BeginPlay(); // needed for BP to work
 
 	//UE_LOG(LogTemp,Warning,TEXT("f7da5eb6: C++ Tank constructed"))
-	
+	tankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+	barrel = FindComponentByClass<UTankBarrel>();
 }
 
 // Called to bind functionality to input
@@ -67,7 +68,7 @@ void ATank::Fire()
 {
 	//UE_LOG(LogTemp, Warning, TEXT("Firing!"));
 	bool isReloaded = (FPlatformTime::Seconds() - lastFireTime) > reloadTimeInSeconds;
-	if (ensure(barrel && isReloaded)) { 
+	if (ensure(barrel) && isReloaded) { 
 
 		// Spawn a projectile at the socket location
 		auto projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, barrel->GetSocketLocation(FName("canonTip")), barrel->GetSocketRotation(FName("canonTip")));
