@@ -33,7 +33,7 @@ public:
 
 	//void SetTurretReference(UTankTurret * turretToSet);
 
-	void AimAt(FVector hitLocation, float launchSpeed);
+	void AimAt(FVector hitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 		void Initialize(UTankBarrel * barrelToSet, UTankTurret * turretToSet);
@@ -52,5 +52,8 @@ private:
 
 	void MoveBarrelTowards(FVector aimDirection);
 	void MoveTurretTowards(FVector aimDirection);
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+		float launchSpeed = 1000000; // TODO find Sensible starting value.
 	
 };

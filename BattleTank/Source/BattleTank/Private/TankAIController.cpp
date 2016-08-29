@@ -3,7 +3,8 @@
 
 #include "BattleTank.h"
 #include "TankAIController.h"
-#include "Tank.h"
+#include "TankAimingComponent.h"
+//#include "Tank.h"
 //#include "GameFramework/PlayerController.h"
 //#include "TankPlayerController.generated.h"
 //#include "TankPlayerController.h"
@@ -38,7 +39,7 @@ return Cast<ATank>(GetPawn());
 void ATankAIController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	auto aiTank = Cast<ATank>(GetPawn());
+	auto aiTank = GetPawn();
 	auto playerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
 	if (ensure(playerTank)) {
 
@@ -46,10 +47,11 @@ void ATankAIController::Tick(float DeltaSeconds)
 		MoveToActor(playerTank, acceptanceRadius); // TODO check radius is in cm
 
 		// Aim towards the player
-		aiTank->AimAt(playerTank->GetActorLocation());
+		auto aimComponent = aiTank->FindComponentByClass<UTankAimingComponent>();
+		aimComponent->AimAt(playerTank->GetActorLocation());
 		
 
-		aiTank->reloadTimeInSeconds = 10;
+		//GetPawn().reloadTimeInSeconds = 10;
 		// Fire if ready
 		
 		//aiTank->Fire(); //TODO not firing every frame

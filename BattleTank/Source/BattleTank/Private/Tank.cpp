@@ -5,7 +5,7 @@
 #include "TankBarrel.h"
 #include "Tank.h"
 #include "Projectile.h"
-#include "TankAimingComponent.h"
+//#include "TankAimingComponent.h"
 #include "TankMovementComponent.h"
 
 
@@ -28,7 +28,7 @@ void ATank::BeginPlay()
 	Super::BeginPlay(); // needed for BP to work
 
 	//UE_LOG(LogTemp,Warning,TEXT("f7da5eb6: C++ Tank constructed"))
-	tankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+	//tankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 	barrel = FindComponentByClass<UTankBarrel>();
 }
 
@@ -39,15 +39,17 @@ void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 
 }
 
-
+/*
 void ATank::AimAt(FVector hitLocation) {
 
-	if (!ensure(tankAimingComponent)) { return; }
-	tankAimingComponent->AimAt(hitLocation, launchSpeed);
+if (!ensure(tankAimingComponent)) { return; }
+tankAimingComponent->AimAt(hitLocation, launchSpeed);
 //auto ourTankName = GetName();
 
 //UE_LOG(LogTemp, Warning, TEXT("%s is aiming at: %s"),*ourTankName, *hitLocation.ToString());
 }
+*/
+
 
 /*
 void ATank::SetBarrelReference(UTankBarrel * barrelToSet)
