@@ -54,7 +54,7 @@ void ATankAIController::Tick(float DeltaSeconds)
 		//GetPawn().reloadTimeInSeconds = 10;
 		// Fire if ready
 		
-		//aiTank->Fire(); //TODO not firing every frame
+		//aimComponent->Fire(); //TODO not firing every frame
 
 		
 	}

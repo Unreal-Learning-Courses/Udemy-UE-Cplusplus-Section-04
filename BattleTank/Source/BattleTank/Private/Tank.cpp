@@ -2,11 +2,11 @@
 
 
 #include "BattleTank.h"
-#include "TankBarrel.h"
+//#include "TankBarrel.h"
 #include "Tank.h"
-#include "Projectile.h"
+//#include "Projectile.h"
 //#include "TankAimingComponent.h"
-#include "TankMovementComponent.h"
+//#include "TankMovementComponent.h"
 
 
 
@@ -29,15 +29,19 @@ void ATank::BeginPlay()
 
 	//UE_LOG(LogTemp,Warning,TEXT("f7da5eb6: C++ Tank constructed"))
 	//tankAimingComponent = FindComponentByClass<UTankAimingComponent>();
-	barrel = FindComponentByClass<UTankBarrel>();
+	//barrel = FindComponentByClass<UTankBarrel>();
 }
 
+/*
 // Called to bind functionality to input
 void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {
 	Super::SetupPlayerInputComponent(InputComponent);
 
 }
+
+*/
+
 
 /*
 void ATank::AimAt(FVector hitLocation) {
@@ -65,7 +69,7 @@ tankAimingComponent->SetTurretReference(turretToSet);
 }
 */
 
-
+/*
 void ATank::Fire()
 {
 	//UE_LOG(LogTemp, Warning, TEXT("Firing!"));
@@ -79,4 +83,6 @@ void ATank::Fire()
 		lastFireTime = FPlatformTime::Seconds();
 	}
 }
+
+*/
 

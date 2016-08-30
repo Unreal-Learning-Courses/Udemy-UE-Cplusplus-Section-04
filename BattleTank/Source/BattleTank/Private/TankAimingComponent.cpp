@@ -3,6 +3,7 @@
 #include "BattleTank.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Projectile.h"
 #include "TankAimingComponent.h"
 
 
@@ -92,3 +93,17 @@ void UTankAimingComponent::SetTurretReference(UTankTurret* turretToSet) {
 turret = turretToSet;
 }
 */
+
+void UTankAimingComponent::Fire()
+{
+	//UE_LOG(LogTemp, Warning, TEXT("Firing!"));
+	bool isReloaded = (FPlatformTime::Seconds() - lastFireTime) > reloadTimeInSeconds;
+	if (ensure(barrel) && isReloaded) {
+
+		// Spawn a projectile at the socket location
+		auto projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, barrel->GetSocketLocation(FName("canonTip")), barrel->GetSocketRotation(FName("canonTip")));
+
+		projectile->LaunchProjectile(launchSpeed);
+		lastFireTime = FPlatformTime::Seconds();
+	}
+}
