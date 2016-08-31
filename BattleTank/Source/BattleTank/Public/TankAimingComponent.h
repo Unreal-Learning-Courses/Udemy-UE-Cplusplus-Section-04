@@ -50,21 +50,34 @@ protected:
 		EFiringStatus firingState = EFiringStatus::Reloading;
 	
 private:
+	
+
 
 	//UPROPERTY(BlueprintReadOnly, Category = Setup)
 		UTankBarrel* barrel = nullptr;
 	//UPROPERTY(BlueprintReadOnly, Category = Setup)
 		UTankTurret* turret = nullptr;
 
-	void MoveBarrelTowards(FVector aimDirection);
-	void MoveTurretTowards(FVector aimDirection);
-
+		FVector aimDirection;
+	//FVector OUTlaunchVelocity;
+	
 	UPROPERTY(EditAnywhere, Category = Firing)
 		float launchSpeed = 10000; // TODO find Sensible starting value.
-	
+
 	UPROPERTY(EditAnywhere, Category = Setup)
 		TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	double lastFireTime = 0;
+
+	void MoveBarrelTowards(FVector aimDirection);
+	void MoveTurretTowards(FVector aimDirection);
+
+	virtual void BeginPlay() override;
+
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
+	bool IsBarrelMoving();
+
+
 	
 };
