@@ -22,4 +22,12 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 		float trackMaxDrivingForce = 1330000/2; //based on 400hp on 35ton M4 Sherman
 
+private:
+
+	UTankTrack();
+
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction) override;
+
+
+
 };

@@ -3,8 +3,31 @@
 #include "BattleTank.h"
 #include "TankTrack.h"
 
+UTankTrack::UTankTrack() {
+	PrimaryComponentTick.bCanEverTick = true;
+}
 
+void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
+{
 
+	// Calculate the slippage speed
+	//FVector OUTdirection;
+	//float OUTspeed;
+	auto slippageSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity());
+	//GetOwner()->GetVelocity().ToDirectionAndLength(OUTdirection, OUTspeed);
+	//UE_LOG(LogTemp,Warning, TEXT("direction is %s, speed is %f"),*OUTdirection.ToString(),OUTspeed)
+	//UE_LOG(LogTemp, Warning, TEXT("slippage speed is %f"), slippageSpeed)
+
+	// Work-out the required acceleration this frame to correct
+	
+	auto correctionAcceleration = -(slippageSpeed / DeltaTime * GetRightVector());
+	
+	// Calculate and apply sidways (F = ma)
+	auto tankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
+	auto correctionForce = (tankRoot->GetMass() * correctionAcceleration)/2; //Two Tracks
+	tankRoot->AddForce(correctionForce);
+
+}
 
 void UTankTrack::SetThrottle(float throttle) {
 
