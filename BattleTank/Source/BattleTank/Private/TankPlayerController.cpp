@@ -56,9 +56,11 @@ void ATankPlayerController::AimTowardsCrosshair() {
 		UE_LOG(LogTemp, Warning, TEXT("No Aiming Component Found!"))
 	}
 	FVector hitLocation; // Out parameter
-	
+	bool bGetSightRayHitLocation = GetSightRayHitLocation(hitLocation);
+	//UE_LOG(LogTemp, Warning, TEXT("Is getting SightRayHitLocation: %i"), bGetSightRayHitLocation)
+
 	// Get world location if linetrace through crosshair
-	if (ensure(GetSightRayHitLocation(hitLocation))) {
+	if (bGetSightRayHitLocation) {
 		// If it hits the landscape
 		//UE_LOG(LogTemp, Warning, TEXT("hitLocation: %s"), *hitLocation.ToString());
 		aimingComponent->AimAt(hitLocation);
@@ -84,9 +86,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& hitLocation) const {
 		//UE_LOG(LogTemp, Warning, TEXT("Look direction:: %s"), *lookDirection.ToString());
 
 		// Line-trace along that look direction, and see what we hit (up to max range)
-		if (ensure(GetLookVectorHitLocation(hitLocation, lookDirection))) {
-			return true;
-		}
+		return GetLookVectorHitLocation(hitLocation, lookDirection);
 	}
 	return false;
 }

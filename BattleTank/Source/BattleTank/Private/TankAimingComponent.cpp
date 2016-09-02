@@ -111,10 +111,16 @@ void UTankAimingComponent::MoveTurretTowards(FVector aimDirection)
 	FRotator deltaRotator = aimAsRotator - turretRotator;
 
 	//UE_LOG(LogTemp, Warning, TEXT("deltaRotator is %f"), deltaRotator.Yaw);
-	turret->Rotate(deltaRotator.Yaw);
+	if (deltaRotator.Yaw > 180) {
+		float newRotatorDirection = -(360 - deltaRotator.Yaw);
+		turret->Rotate(newRotatorDirection);
+	}
+	else
+	{
+		turret->Rotate(deltaRotator.Yaw);
+	}
+
 }
-
-
 
 /*
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* barrelToSet)
