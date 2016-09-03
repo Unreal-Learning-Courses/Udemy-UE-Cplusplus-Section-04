@@ -41,13 +41,15 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Firing)
 		void Fire();
-
+	UPROPERTY(EditAnywhere, Category = Firing)
 	float reloadTimeInSeconds = 3;
 
-protected:
+	EFiringStatus GetFiringState() const;
 
+protected:
 	UPROPERTY(BlueprintReadOnly, Category = State)
 		EFiringStatus firingState = EFiringStatus::Reloading;
+
 	
 private:
 	

@@ -17,9 +17,6 @@ void UTankTrack::BeginPlay()
 /*
 void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
 {
-
-
-
 }
 
 */

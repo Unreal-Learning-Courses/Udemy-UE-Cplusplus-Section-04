@@ -53,8 +53,11 @@ void ATankAIController::Tick(float DeltaSeconds)
 
 		//GetPawn().reloadTimeInSeconds = 10;
 		// Fire if ready
-		
-		//aimComponent->Fire(); //TODO not firing every frame
+		if (aimComponent->GetFiringState() == EFiringStatus::Ready) {
+			aimComponent->Fire();
+			UE_LOG(LogTemp,Warning,TEXT("AI Tank Ready and Firing!"))
+		}
+
 
 		
 	}

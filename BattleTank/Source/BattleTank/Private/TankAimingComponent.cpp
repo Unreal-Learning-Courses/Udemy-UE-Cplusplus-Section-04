@@ -150,6 +150,11 @@ void UTankAimingComponent::Fire()
 	}
 }
 
+EFiringStatus UTankAimingComponent::GetFiringState() const
+{
+	return firingState;
+}
+
 bool UTankAimingComponent::IsBarrelMoving()
 {
 	//auto aimDirection = OUTlaunchVelocity.GetSafeNormal();
