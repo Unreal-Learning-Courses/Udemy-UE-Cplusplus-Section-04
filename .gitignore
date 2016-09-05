@@ -6,6 +6,9 @@
 *.o
 *.obj
 
+# 3D Mesh Object files
+*.fbx
+
 # Precompiled Headers
 *.gch
 *.pch
