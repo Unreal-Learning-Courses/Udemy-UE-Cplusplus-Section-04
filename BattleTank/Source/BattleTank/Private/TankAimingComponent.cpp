@@ -29,20 +29,24 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 {
 	
 	//UE_LOG(LogTemp, Warning, TEXT("Aiming Comp Ticking"))
+	if (ammoCount == 0)
+	{
+		firingState = EFiringStatus::OutAmmo;
+	}
+	else if ((FPlatformTime::Seconds() - lastFireTime) < reloadTimeInSeconds) {
 
-		if ((FPlatformTime::Seconds() - lastFireTime) < reloadTimeInSeconds) {
+		firingState = EFiringStatus::Reloading;
+	}
+	else if (IsBarrelMoving())
+	{
+		firingState = EFiringStatus::Aiming;
 
-			firingState = EFiringStatus::Reloading;
-		}
-		else if (IsBarrelMoving())
-		{
-			firingState = EFiringStatus::Aiming;
+	}
+	else
+	{
 
-		}
-		else {
-
-			firingState = EFiringStatus::Ready;
-		}
+		firingState = EFiringStatus::Ready;
+	}
 
 }
 
@@ -139,14 +143,15 @@ void UTankAimingComponent::Fire()
 	//UE_LOG(LogTemp, Warning, TEXT("Firing!"));
 	//bool isReloaded = (FPlatformTime::Seconds() - lastFireTime) > reloadTimeInSeconds;
 	//UE_LOG(LogTemp, Warning, TEXT("trying to Firing"))
-	if (firingState != EFiringStatus::Reloading) {
+	if (firingState != EFiringStatus::Reloading && ammoCount != 0) {
 
 		// Spawn a projectile at the socket location
 		auto projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, barrel->GetSocketLocation(FName("canonTip")), barrel->GetSocketRotation(FName("canonTip")));
 
 		projectile->LaunchProjectile(launchSpeed);
 		lastFireTime = FPlatformTime::Seconds();
-		//UE_LOG(LogTemp, Warning, TEXT("Firing"))
+		ammoCount -= 1;
+		UE_LOG(LogTemp, Warning, TEXT("Ammo at %i"),ammoCount)
 	}
 }
 
@@ -173,4 +178,9 @@ bool UTankAimingComponent::IsBarrelMoving()
 		return true;
 	}
 	
+}
+
+int32 UTankAimingComponent::getAmmoCount()
+{
+	return ammoCount;
 }
