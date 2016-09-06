@@ -22,9 +22,14 @@ public:
 
 	void LaunchProjectile(float launchSpeed);
 
-protected:
+private:
+
 	UProjectileMovementComponent* projectileMovement = nullptr;
 
+	UPROPERTY(VisibleAnywhere, Category = Components)
+		UStaticMeshComponent* collisionMesh = nullptr;
 	
+	UPROPERTY(VisibleAnywhere, Category = Components)
+		UParticleSystemComponent* launchBlast = nullptr;
 	
 };

@@ -9,9 +9,20 @@ AProjectile::AProjectile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
+	
+	collisionMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("Collision Mesh"));
+	SetRootComponent(collisionMesh);
+	collisionMesh->SetNotifyRigidBodyCollision(true);
+	collisionMesh->SetVisibility(false);
+
+	launchBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Launch Blast"));
+	//launchBlast->AttachTo(RootComponent);
+	launchBlast->SetupAttachment(RootComponent);
 
 	projectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Movement Component"));
 	projectileMovement->bAutoActivate = false;
+
+
 }
 
 // Called when the game starts or when spawned
