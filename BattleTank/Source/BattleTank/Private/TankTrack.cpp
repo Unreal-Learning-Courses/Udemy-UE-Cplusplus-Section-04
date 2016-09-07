@@ -5,21 +5,23 @@
 
 UTankTrack::UTankTrack() {
 	PrimaryComponentTick.bCanEverTick = false;
-
+	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
 }
 
 void UTankTrack::BeginPlay()
 {
-	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
+	//OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
 
 }
 
 /*
 void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
 {
+
 }
 
 */
+
 
 void UTankTrack::ApplySidewaysForce()
 {

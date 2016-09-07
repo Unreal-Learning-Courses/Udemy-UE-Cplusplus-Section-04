@@ -35,6 +35,9 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = Components)
 		UParticleSystemComponent* impactBlast = nullptr;
 
+	UPROPERTY(VisibleAnywhere, Category = Components)
+		URadialForceComponent* explosionForce = nullptr;
+
 	UFUNCTION(BlueprintCallable, Category = Collision)
 		void OnHit(UPrimitiveComponent * hitComponent, AActor * otherActor, UPrimitiveComponent * otherComponent, FVector normalImpulse, const FHitResult & Hit);
 	

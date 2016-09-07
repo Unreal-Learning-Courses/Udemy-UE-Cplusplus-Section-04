@@ -41,4 +41,5 @@ private:
 	
 	void DrivingTrack();
 
+	//bool canDrive = false;
 };
