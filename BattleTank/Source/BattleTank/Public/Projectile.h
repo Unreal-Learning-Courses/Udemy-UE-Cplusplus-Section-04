@@ -37,8 +37,13 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = Components)
 		URadialForceComponent* explosionForce = nullptr;
+	
+	UPROPERTY(EditDefaultsOnly,Category = Timer)
+		float destroyDelay = 5;
 
 	UFUNCTION(BlueprintCallable, Category = Collision)
 		void OnHit(UPrimitiveComponent * hitComponent, AActor * otherActor, UPrimitiveComponent * otherComponent, FVector normalImpulse, const FHitResult & Hit);
+
+	void OnTimesUp();
 	
 };
