@@ -47,7 +47,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 		UTankMovementComponent* tankMovementComponent = nullptr;
 	*/
-
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser) override;
 private:
 	// Sets default values for this pawn's properties
 	ATank();
@@ -55,6 +55,7 @@ private:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
+	//virtual void Tick() override;
 	// Called to bind functionality to input
 	//virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
@@ -76,5 +77,9 @@ private:
 	
 	double lastFireTime = 0;
 	*/
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+		int32 startingHealth = 100;
 	
+	UPROPERTY(VisibleAnywhere, Category = Setup)
+	int32 currentHealth = startingHealth;
 };

@@ -55,7 +55,7 @@ void ATankAIController::Tick(float DeltaSeconds)
 		// Fire if ready
 		if (aimComponent->GetFiringState() == EFiringStatus::Ready) {
 			aimComponent->Fire();
-			UE_LOG(LogTemp,Warning,TEXT("AI Tank Ready and Firing!"))
+			//UE_LOG(LogTemp,Warning,TEXT("AI Tank Ready and Firing!"))
 		}
 
 

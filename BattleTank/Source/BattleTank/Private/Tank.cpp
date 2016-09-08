@@ -14,7 +14,7 @@
 ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 
 	// No need to protect points as added at construction
 	//tankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
@@ -27,9 +27,15 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay(); // needed for BP to work
 
+
 	//UE_LOG(LogTemp,Warning,TEXT("f7da5eb6: C++ Tank constructed"))
 	//tankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 	//barrel = FindComponentByClass<UTankBarrel>();
+}
+
+void tick() {
+
+
 }
 
 /*
@@ -86,3 +92,26 @@ void ATank::Fire()
 
 */
 
+float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser) {
+	//const float actualDamange = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	
+	//if (!GetOwner()) { return 0; }
+	auto currrentTankName = GetName();
+	
+	int32 damanagePoints = FPlatformMath::RoundToInt(DamageAmount);
+	auto damageToApply = FMath::Clamp<int32>(damanagePoints, 0, currentHealth);
+	
+
+
+	if (currentHealth <= 0) {
+
+		UE_LOG(LogTemp, Warning, TEXT("%s is dead!"), *currrentTankName)
+
+	}
+	else {
+		currentHealth -= damageToApply;
+		UE_LOG(LogTemp, Warning, TEXT("%s is receiving %i damage!"), *currrentTankName, damageToApply)
+	}
+	
+	return DamageAmount;
+}
