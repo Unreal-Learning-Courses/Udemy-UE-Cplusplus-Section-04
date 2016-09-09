@@ -34,7 +34,8 @@ public:
 
 	float reloadTimeInSeconds = 3;
 	*/
-
+	UFUNCTION(BlueprintPure, Category = Health)
+		float GetHealthPercent() const;
 
 
 protected:
@@ -48,6 +49,9 @@ protected:
 		UTankMovementComponent* tankMovementComponent = nullptr;
 	*/
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser) override;
+
+
+
 private:
 	// Sets default values for this pawn's properties
 	ATank();
