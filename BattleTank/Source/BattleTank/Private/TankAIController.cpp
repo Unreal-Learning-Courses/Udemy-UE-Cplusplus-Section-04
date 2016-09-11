@@ -2,9 +2,10 @@
 
 
 #include "BattleTank.h"
-#include "TankAIController.h"
 #include "TankAimingComponent.h"
-//#include "Tank.h"
+#include "Tank.h"
+#include "TankAIController.h"
+
 //#include "GameFramework/PlayerController.h"
 //#include "TankPlayerController.generated.h"
 //#include "TankPlayerController.h"
@@ -36,6 +37,22 @@ return Cast<ATank>(GetPawn());
 */
 
 
+void ATankAIController::SetPawn(APawn * InPawn)
+{
+	Super::SetPawn(InPawn);
+
+	if (InPawn) {
+
+		possessedTank = Cast<ATank>(InPawn);
+		if (!ensure(possessedTank)) { return; }
+
+		// TDO Subscribe our local method to the tank's death event
+		possessedTank->OnDeath.AddUniqueDynamic(this, &ATankAIController::onPossedTankDeath);
+
+	}
+
+}
+
 void ATankAIController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
@@ -63,4 +80,13 @@ void ATankAIController::Tick(float DeltaSeconds)
 	}
 
 }
+
+void ATankAIController::onPossedTankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("%s Is Dead"), *GetPawn()->GetName())
+
+	possessedTank->DetachFromControllerPendingDestroy();
+
+}
+
 

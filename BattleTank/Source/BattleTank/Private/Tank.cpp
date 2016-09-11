@@ -32,7 +32,7 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay(); // needed for BP to work
 
-
+	currentHealth = startingHealth;
 	//UE_LOG(LogTemp,Warning,TEXT("f7da5eb6: C++ Tank constructed"))
 	//tankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 	//barrel = FindComponentByClass<UTankBarrel>();
@@ -110,13 +110,18 @@ float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEv
 
 	if (currentHealth <= 0) {
 
-		UE_LOG(LogTemp, Warning, TEXT("%s is dead!"), *currrentTankName)
-
+		//UE_LOG(LogTemp, Warning, TEXT("%s is dead!"), *currrentTankName)
+		OnDeath.Broadcast();
 	}
 	else {
 		currentHealth -= damageToApply;
 		UE_LOG(LogTemp, Warning, TEXT("%s is receiving %i damage!"), *currrentTankName, damageToApply)
+			if (currentHealth <= 0) {
+
+				OnDeath.Broadcast();
+			}
 	}
 	
 	return DamageAmount;
 }
+

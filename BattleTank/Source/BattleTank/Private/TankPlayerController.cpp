@@ -4,15 +4,15 @@
 #include "BattleTank.h"
 #include "TankPlayerController.h"
 #include "TankAimingComponent.h"
-//#include "Tank.h"
-/*
+#include "Tank.h"
+
 ATank* ATankPlayerController::GetControlledTank() const {
 	
 
-	return GetPawn();
+	return Cast<ATank>(GetPawn());
 }
 
-*/
+
 
 void ATankPlayerController::BeginPlay()
 {
@@ -42,6 +42,10 @@ void ATankPlayerController::Tick(float DeltaTime){
 
 	AimTowardsCrosshair();
 
+	auto possessedTank = GetControlledTank();
+	if (possessedTank) {
+		possessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::onPossedTankDeath);
+	}
 }
 
 void ATankPlayerController::AimTowardsCrosshair() {
@@ -119,4 +123,12 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector& hitLocation, FVect
 	}
 	hitLocation = FVector(0);
 	return false;
+}
+
+void ATankPlayerController::onPossedTankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("I'm Dead! Like so DED!"))
+
+		StartSpectatingOnly();
+
 }
